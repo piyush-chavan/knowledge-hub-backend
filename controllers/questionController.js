@@ -38,3 +38,39 @@ export const getQuestionById = async (req, res) => {
         res.status(500).json({ message: "Error fetching question", error });
     }
 };
+
+export const toggleBookmark = async(req,res)=>{
+    try{
+        const questionId = req.params.id;
+        const userId = req.user._id;
+        const userInDB = await User.findById(userId);
+        const isAlreadyBookmarked = userInDB.bookmarks.includes(questionId);
+        if(isAlreadyBookmarked){
+            userInDB.bookmarks.pull(questionId);
+        }
+        else{
+            userInDB.bookmarks.push(questionId);
+        }
+        await userInDB.save();
+        res.status(200).json({isBookmarked:!isAlreadyBookmarked});
+    }
+    catch(err){
+        console.log(err)
+        res.status(500).json({message:"Internal Server Error"})
+    }
+}
+
+export const checkBookmark = async(req,res)=>{
+    try{
+        const questionId = req.params.id;
+        const userId = req.user._id;
+        const userInDB = await User.findById(userId);
+        const isAlreadyBookmarked = userInDB.bookmarks.includes(questionId);
+        
+        res.status(200).json({isBookmarked:isAlreadyBookmarked});
+    }
+    catch(err){
+        console.log(err)
+        res.status(500).json({message:"Internal Server Error"})
+    }
+}

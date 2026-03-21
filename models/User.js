@@ -33,6 +33,10 @@ const userSchema = new mongoose.Schema({
                 twitter:{type:String,default:"N/A"},
         }
     },
+    bookmarks:{
+        type:[{type:mongoose.Schema.Types.ObjectId,ref:'Question'}],
+        default:[]
+    },
     joinedOn:{
         type:Date,
         default:Date.now

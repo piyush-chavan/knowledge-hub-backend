@@ -5,7 +5,7 @@ import { Answer } from "../models/Answer.js";
 export const getUserDetails = async (req, res) => {
     try {
         const userId = req.user._id;
-        const userDetails = await User.findById(userId).select('-password');
+        const userDetails = await User.findById(userId).select('-password').populate('bookmarks');
         const questionsAsked = await Question.find({ user: userId });
         const answersGiven = await Answer.find({ user: userId }).populate('question', 'title');
         res.status(200).json({ userDetails, questionsAsked, answersGiven })
