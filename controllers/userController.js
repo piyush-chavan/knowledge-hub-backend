@@ -43,13 +43,31 @@ export const updateUserProfile = async (req, res) => {
     }
 }
 
-export const getAllUsers = async(req,res)=>{
+export const getAllUsers = async (req, res) => {
     try {
-        const allUsers = await User.find().select('name username email').select('-password');
+        const allUsers = await User.find().select('name username email profilePic').select('-password');
         res.status(200).json(allUsers)
     }
     catch (err) {
         console.log(err)
         res.status(500).json({ message: "Internal Server Error" })
+    }
+}
+
+export const saveProfilePic = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const updatedUser = await User.findByIdAndUpdate(userId,
+            { profilePic: req.body.imageUrl },
+            { new: true }
+        );
+        if(updatedUser){
+            res.status(200).json(updatedUser);
+        }
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "Internal Server Error" })
+
     }
 }

@@ -37,6 +37,9 @@ const userSchema = new mongoose.Schema({
         type:[{type:mongoose.Schema.Types.ObjectId,ref:'Question'}],
         default:[]
     },
+    profilePic:{
+        type:String
+    },
     joinedOn:{
         type:Date,
         default:Date.now

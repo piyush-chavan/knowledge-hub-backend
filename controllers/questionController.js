@@ -21,7 +21,7 @@ export const postQuestion = async (req, res) => {
 
 export const getAllQuestions = async (req, res) => {
     try {
-        const questions = await Question.find().populate('user', 'username');
+        const questions = await Question.find().populate('user', 'username profilePic');
         res.json({ questions });
     } catch (error) {
         res.status(500).json({ message: "Error fetching questions", error });
@@ -31,8 +31,8 @@ export const getAllQuestions = async (req, res) => {
 export const getQuestionById = async (req, res) => {
     try {
         const questionId = req.params.id;
-        const question = await Question.findById(questionId).populate('user', 'username')
-        const answers = await Answer.find({ question: questionId }).populate('user', 'username')
+        const question = await Question.findById(questionId).populate('user', 'username profilePic')
+        const answers = await Answer.find({ question: questionId }).populate('user', 'username profilePic')
         res.json({ question, answers });
     } catch (error) {
         res.status(500).json({ message: "Error fetching question", error });
