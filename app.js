@@ -6,6 +6,7 @@ import { auth } from './middlewares/auth.js'
 import { router as userRoutes } from './routes/userRoutes.js'
 import { router as questionRoutes } from './routes/questionRoutes.js'
 import { router as answerRoutes } from './routes/answerRoutes.js'
+import { router as aiRoutes } from './routes/aiRoutes.js'
 import { requestLogger } from './middlewares/logger.js';
 
 export const app = express();
@@ -22,6 +23,7 @@ app.use('/auth',authRoutes)
 app.use('/user',userRoutes)
 app.use('/question', questionRoutes)
 app.use('/answer', answerRoutes)
+app.use('/ai',aiRoutes)
 
 
 app.get('/api/hello',auth, (req, res) => {
